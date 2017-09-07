@@ -103,14 +103,12 @@ class ServerListener implements Runnable{
                 } else {
                     try {
                         //Gets image from server, appends username, stores in local directory
-                        File image = (File) objIn.readObject();
-                        String name = Helper.getImageName(image.getAbsoluteFile());
-                        System.out.println(name);
-                        name += "_" + userName;
-                        FileWriter fw = new FileWriter(image);
-                        fw.write("." + File.separator + name);
-
-                    } catch (Exception e) {
+                        String filename = in.nextLine() + "_" + userName + "." + in.nextLine();
+                        System.out.println(filename);
+                        FileOutputStream fos = new FileOutputStream("." + File.separator + filename);
+                        fos.write((byte[]) objIn.readObject());
+                    }
+                    catch (Exception e) {
                         e.printStackTrace();
                     }
                 }

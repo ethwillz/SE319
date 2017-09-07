@@ -122,10 +122,11 @@ class ClientHandler extends Thread implements Runnable{
                                 + "_" + Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
                                 + "_" + Calendar.getInstance().get(Calendar.MINUTE)
                                 + "." + ext;
-                        file = new File("." + File.separator + filename);
                         System.out.println(filename);
 
-                        FileOutputStream fos = new FileOutputStream(filename);
+                        new File("." + File.separator + "image").mkdir();
+
+                        FileOutputStream fos = new FileOutputStream("." + File.separator + "image" + File.separator + filename);
                         fos.write((byte[]) objIn.readObject());
 
                         //Write filename to chat.txt
@@ -146,6 +147,8 @@ class ClientHandler extends Thread implements Runnable{
                             if (!s.equals(socket)) {
                                 out = new PrintWriter(new BufferedOutputStream(s.getOutputStream()));
                                 out.println(2);
+                                out.println(filename.substring(0, filename.indexOf(".")));
+                                out.println(ext);
                                 out.flush();
 
                                 objOut = new ObjectOutputStream(s.getOutputStream());
