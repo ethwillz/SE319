@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -112,15 +113,20 @@ class ClientHandler extends Thread implements Runnable{
                 } else {
                     try {
                         ObjectInputStream objIn = new ObjectInputStream(socket.getInputStream());
-                        file = (File) objIn.readObject();
+                        String name = in.nextLine();
+                        String ext = in.nextLine();
 
                         //Add to image folder
-                        fw = new FileWriter(file);
-                        String filename = Helper.getImageName(file)
+                        String filename = name
                                 + "_" + userName
                                 + "_" + Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-                                + "_" + Calendar.getInstance().get(Calendar.MINUTE);
-                        fw.write("." + File.separator + filename);
+                                + "_" + Calendar.getInstance().get(Calendar.MINUTE)
+                                + "." + ext;
+                        file = new File("." + File.separator + filename);
+                        System.out.println(filename);
+
+                        FileOutputStream fos = new FileOutputStream(filename);
+                        fos.write((byte[]) objIn.readObject());
 
                         //Write filename to chat.txt
                         StringBuilder sb = new StringBuilder();
@@ -143,7 +149,7 @@ class ClientHandler extends Thread implements Runnable{
                                 out.flush();
 
                                 objOut = new ObjectOutputStream(s.getOutputStream());
-                                objOut.writeObject(file);
+                                objOut.writeObject(Files.readAllBytes(file.toPath()));
                                 objOut.flush();
                             }
                         }

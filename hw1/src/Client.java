@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.Socket;
+import java.nio.file.Files;
 import java.util.Scanner;
 
 public class Client {
@@ -66,9 +67,16 @@ public class Client {
     public static void sendImage(Socket socket, Scanner in, PrintWriter out) throws IOException{
         System.out.println("Specify the filepath of the image, then press Enter");
 
+        String path = in.nextLine();
+        File file = new File(path);
+        ;
         out.println("2");
+        out.println(Helper.getImageName(file));
+        out.println(Helper.getImageExtension(file));
+        out.flush();
+
         ObjectOutputStream objOut = new ObjectOutputStream(socket.getOutputStream());
-        objOut.writeObject(new File(in.nextLine()));
+        objOut.writeObject(Files.readAllBytes(file.toPath()));
         objOut.flush();
     }
 }
