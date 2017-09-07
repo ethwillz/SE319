@@ -7,13 +7,16 @@ public class Client {
     public static void main(String[] args) throws IOException{
         Scanner in = new Scanner(System.in);
 
-        System.out.println("Enter your name: (Type in your name, then press Enter)");
+        System.out.println("Enter your name: (Type in your name, then press Enter):");
         String userName = in.nextLine();
 
         Socket socket = new Socket("localhost", 4444);
+        Thread t = new Thread(new ServerListener(socket, userName));
+        t.start();
 
         PrintWriter out = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
         out.println(userName);
+        out.flush();
 
         int choice;
 
@@ -22,11 +25,11 @@ public class Client {
             if (choice == 1) {
                 sendTextMessage(in, out);
             } else if (choice == 2) {
-                sendImage(socket, in);
+                sendImage(socket, in, out);
             } else {
                 out.println(0); //Exit code for server to quit thread
                 out.flush();
-                break;
+                return; //ServerListener will be garbage collected
             }
         }
     }
@@ -55,15 +58,55 @@ public class Client {
     public static void sendTextMessage(Scanner in, PrintWriter out) throws IOException{
         System.out.println("Please type in a message, then press Enter");
 
+        out.println("1");
         out.println(in.nextLine());
         out.flush();
     }
 
-    public static void sendImage(Socket socket, Scanner in) throws IOException{
+    public static void sendImage(Socket socket, Scanner in, PrintWriter out) throws IOException{
         System.out.println("Specify the filepath of the image, then press Enter");
 
-        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-        out.writeObject(new File(in.nextLine()));
-        out.flush();
+        out.println("2");
+        ObjectOutputStream objOut = new ObjectOutputStream(socket.getOutputStream());
+        objOut.writeObject(new File(in.nextLine()));
+        objOut.flush();
+    }
+}
+
+class ServerListener implements Runnable{
+    Socket socket;
+    Scanner in;
+    ObjectInputStream objIn;
+    String userName;
+
+    public ServerListener(Socket socket, String userName) throws IOException {
+        this.socket = socket;
+        this.userName = userName;
+        in = new Scanner(new BufferedInputStream(socket.getInputStream()));
+        objIn = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+    }
+
+    public void run() {
+        while(true){
+            if(in.hasNextLine()) {
+                int messageType = Integer.parseInt(in.nextLine());
+                if (messageType == 1) {
+                    System.out.println(in.nextLine());
+                } else {
+                    try {
+                        //Gets image from server, appends username, stores in local directory
+                        File image = (File) objIn.readObject();
+                        String name = Helper.getImageName(image.getAbsoluteFile());
+                        System.out.println(name);
+                        name += "_" + userName;
+                        FileWriter fw = new FileWriter(image);
+                        fw.write("." + File.separator + name);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 }
