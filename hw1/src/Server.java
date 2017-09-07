@@ -1,7 +1,6 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -12,30 +11,25 @@ public class Server {
 
     public static void main(String[] args){
         ServerSocket serverSocket = null;
-        Scanner in = null;
-        ObjectOutputStream objOut;
-        Socket clientSocket = null;
-        String userName;
         activeSockets = new ArrayList<>();
 
         try{
             serverSocket = new ServerSocket(4444);
         }
         catch (IOException e) {
-            System.out.println("Could not listen on port 4444");
-            System.exit(-1);
+            e.printStackTrace();
         }
 
         while(true){
             try {
-                clientSocket = serverSocket.accept();
+                Socket clientSocket = serverSocket.accept();
                 activeSockets.add(clientSocket);
 
-                objOut = new ObjectOutputStream(clientSocket.getOutputStream());
+                ObjectOutputStream objOut = new ObjectOutputStream(clientSocket.getOutputStream());
                 objOut.flush();
 
-                in = new Scanner(new BufferedInputStream(clientSocket.getInputStream()));
-                userName = in.nextLine();
+                Scanner in = new Scanner(new BufferedInputStream(clientSocket.getInputStream()));
+                String userName = in.nextLine();
 
                 System.out.println("Server connected to " + userName);
 
@@ -43,8 +37,7 @@ public class Server {
                 t.start();
 
             } catch (IOException e) {
-                System.out.println("Accept failed: 4444");
-                System.exit(-1);
+                e.printStackTrace();
             }
         }
     }
@@ -58,21 +51,16 @@ class ClientHandler extends Thread implements Runnable{
     private Socket socket;
     private String userName;
     private Scanner in;
-    private ObjectOutputStream objOut;
     private File file;
     private FileWriter fw;
-    private ArrayList<Socket> activeSockets;
 
     ClientHandler(Socket socket, String userName, Scanner in, ObjectOutputStream objOut){
         this.socket = socket;
         this.userName = userName;
         this.in = in;
-        this.objOut = objOut;
     }
 
     public void run(){
-        PrintWriter out;
-
         while(true){
             if(in.hasNextLine()) {
                 int type = Integer.parseInt(in.nextLine());
@@ -97,16 +85,8 @@ class ClientHandler extends Thread implements Runnable{
                         fw.write(message);
                         fw.flush();
 
-                        //Send message to all other connected clients
-                        activeSockets = (ArrayList<Socket>) Server.getActiveSockets();
-                        for (Socket s : activeSockets) {
-                            if (!s.equals(socket)) {
-                                out = new PrintWriter(new BufferedOutputStream(s.getOutputStream()));
-                                out.println(1);
-                                out.print(message);
-                                out.flush();
-                            }
-                        }
+                        Helper.sendMessageToActiveClients(socket, message);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -124,31 +104,19 @@ class ClientHandler extends Thread implements Runnable{
                                 + "." + ext;
                         System.out.println(filename);
 
-                        file = new File("." + File.separator + "chat.txt");
-                        fw = new FileWriter(file, true);
-                        fw.write(userName + ": " + filename + "\n");
-                        fw.flush();
-
                         new File("." + File.separator + "image").mkdir();
 
                         FileOutputStream fos = new FileOutputStream("." + File.separator + "image" + File.separator + filename);
                         fos.write((byte[]) objIn.readObject());
 
-                        //Send image to all other connected clients
-                        activeSockets = (ArrayList<Socket>) Server.getActiveSockets();
-                        for (Socket s : activeSockets) {
-                            if (!s.equals(socket)) {
-                                out = new PrintWriter(new BufferedOutputStream(s.getOutputStream()));
-                                out.println(2);
-                                out.println(filename.substring(0, filename.indexOf(".")));
-                                out.println(ext);
-                                out.flush();
+                        //Write to chat.txt
+                        file = new File("." + File.separator + "chat.txt");
+                        fw = new FileWriter(file, true);
+                        fw.write(userName + ": " + filename + "\n");
+                        fw.flush();
 
-                                objOut = new ObjectOutputStream(s.getOutputStream());
-                                objOut.writeObject(Files.readAllBytes(file.toPath()));
-                                objOut.flush();
-                            }
-                        }
+                        Helper.sendImageToActiveClients(socket, filename);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
