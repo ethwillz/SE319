@@ -93,8 +93,8 @@ class ClientHandler extends Thread implements Runnable{
                         System.out.println(message);
 
                         file = new File("." + File.separator + "chat.txt");
-                        fw = new FileWriter(file);
-                        fw.append(message);
+                        fw = new FileWriter(file, true);
+                        fw.write(message);
                         fw.flush();
 
                         //Send message to all other connected clients
@@ -124,22 +124,15 @@ class ClientHandler extends Thread implements Runnable{
                                 + "." + ext;
                         System.out.println(filename);
 
+                        file = new File("." + File.separator + "chat.txt");
+                        fw = new FileWriter(file, true);
+                        fw.write(userName + ": " + filename + "\n");
+                        fw.flush();
+
                         new File("." + File.separator + "image").mkdir();
 
                         FileOutputStream fos = new FileOutputStream("." + File.separator + "image" + File.separator + filename);
                         fos.write((byte[]) objIn.readObject());
-
-                        //Write filename to chat.txt
-                        StringBuilder sb = new StringBuilder();
-                        sb.append(userName);
-                        sb.append(": ");
-                        sb.append(filename);
-                        sb.append("\n");
-                        String message = sb.toString();
-
-                        file = new File("." + File.separator + "chat.txt");
-                        fw = new FileWriter(file);
-                        fw.append(message);
 
                         //Send image to all other connected clients
                         activeSockets = (ArrayList<Socket>) Server.getActiveSockets();
