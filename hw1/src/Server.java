@@ -72,6 +72,8 @@ class ClientHandler extends Thread implements Runnable{
 
                         //Add to chat.txt
                         StringBuilder sb = new StringBuilder();
+                        sb.append(Helper.getLatestMessageID() + 1);
+                        sb.append(" ");
                         sb.append(userName);
                         sb.append(": ");
                         sb.append(message);
@@ -112,7 +114,7 @@ class ClientHandler extends Thread implements Runnable{
                         //Write to chat.txt
                         file = new File("." + File.separator + "chat.txt");
                         fw = new FileWriter(file, true);
-                        fw.write(userName + ": " + filename + "\n");
+                        fw.write((Helper.getLatestMessageID() + 1) + " " + userName + ": " + filename + "\n");
                         fw.flush();
 
                         Helper.sendImageToActiveClients(socket, filename);

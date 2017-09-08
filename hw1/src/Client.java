@@ -19,14 +19,19 @@ public class Client {
         out.flush();
 
         int choice;
+        boolean isAdmin = userName.toLowerCase().equals("admin");
 
         while(true) {
-            choice = Helper.getChoice(in);
+            choice = Helper.getChoice(in, isAdmin);
             if (choice == 1) {
                 Helper.sendTextMessage(in, out);
             } else if (choice == 2) {
                 Helper.sendImage(socket, in, out);
-            } else {
+            } else if(isAdmin && choice == 3){
+                Helper.printChatHistory();
+            } else if(isAdmin && choice == 4){
+                Helper.deleteMessageFromHistory();
+            }else {
                 out.println(0); //Exit code for server to quit thread
                 out.flush();
                 return; //ServerListener will be garbage collected

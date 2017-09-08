@@ -6,15 +6,22 @@ import java.util.Scanner;
 
 public class Helper {
 
-    public static int getChoice(Scanner in){
+    public static int getChoice(Scanner in, boolean isAdmin){
         int choice;
 
-        System.out.println("Press (1) to send a text message to the server\nOr (2) to send an image to the server\nOr (0) to exit");
+        System.out.println("Press (1) to send a text message to the server\nOr (2) to send an image to the server");
+        if(isAdmin){
+            System.out.println("Or (3) to print chat history\nOr (4) to delete a message from the history");
+        }
+        System.out.println("Or (0) to exit");
 
         while(true){
             try {
                 choice = Integer.parseInt(in.nextLine());
                 if(choice == 1 || choice == 2 || choice == 0){
+                    return choice;
+                }
+                else if(isAdmin && (choice == 3 || choice == 4)){
                     return choice;
                 }
                 else{
@@ -49,6 +56,50 @@ public class Helper {
         ObjectOutputStream objOut = new ObjectOutputStream(socket.getOutputStream());
         objOut.writeObject(Files.readAllBytes(file.toPath()));
         objOut.flush();
+    }
+
+    public static void printChatHistory() throws FileNotFoundException {
+        File file = new File("." + File.separator + "chat.txt");
+        Scanner in = new Scanner(file);
+        while(in.hasNextLine()){
+            System.out.println(in.nextLine());
+        }
+    }
+
+    public static void deleteMessageFromHistory() throws IOException {
+        System.out.println("Please type in a message ID to delete and press Enter");
+
+        Scanner in = new Scanner(System.in);
+        int messageIDToDelete = Integer.parseInt(in.nextLine());
+
+        File file = new File("." + File.separator + "chat.txt");
+        File tempFile = new File("." + File.separator + "temp.txt");
+        in = new Scanner(file);
+        BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile, true));
+
+        while(in.hasNextLine()){
+            String temp = in.nextLine();
+            if (Integer.parseInt(temp.split(" ")[0]) != messageIDToDelete) {
+                bw.write(temp + "\n");
+            }
+        }
+        bw.flush();
+        tempFile.renameTo(file);
+    }
+
+    public static int getLatestMessageID() throws FileNotFoundException {
+        File file = new File("." + File.separator + "chat.txt");
+        Scanner in = new Scanner(file);
+        String lastScanned = "";
+        while(in.hasNextLine()){
+            lastScanned = in.nextLine();
+        }
+        try {
+            return Integer.parseInt(lastScanned.split(" ")[0]);
+        }
+        catch(NumberFormatException e){
+            return 0;
+        }
     }
 
     public static String getImageName(File file){
