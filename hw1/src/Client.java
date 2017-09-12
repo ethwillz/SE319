@@ -65,36 +65,33 @@ class ServerInteraction implements Runnable{
 
 class ServerListener implements Runnable{
     Socket socket;
-    Scanner in;
-    ObjectInputStream objIn;
+    ObjectInputStream in;
     String userName;
 
     public ServerListener(Socket socket, String userName) throws IOException {
         this.socket = socket;
         this.userName = userName;
-        in = new Scanner(new BufferedInputStream(socket.getInputStream()));
-        objIn = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+        in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
     }
-
-    //TODO Convert this to using Object streams
+    
     public void run() {
         while(true){
-            if(in.hasNextLine()) {
-                int messageType = Integer.parseInt(in.nextLine());
-                if (messageType == 1) {
-                    System.out.println(in.nextLine());
-                } else {
-                    try {
-                        //Gets image from server, appends username, stores in local directory
-                        String filename = in.nextLine() + "_" + userName + "." + in.nextLine();
-                        System.out.println(filename);
-                        FileOutputStream fos = new FileOutputStream("." + File.separator + filename);
-                        fos.write((byte[]) objIn.readObject());
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
+            try {
+                Message m = (Message) in.readObject();
+                if(m.getMessageCode() == 1){
+                    System.out.println(m.getTextContent());
                 }
+                else{
+                    //Gets image from server, appends username stores in local directory
+                    String filename = m.getTextContent().split(" ")[0]
+                            + "_" + userName
+                            + "." + m.getTextContent().split(" ")[1];
+                    System.out.println(filename);
+                    FileOutputStream fos = new FileOutputStream("." + File.separator + filename);
+                    fos.write(m.getFileContent());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }

@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5297c775-d72b-49b8-9753-e9693a3bb1ef" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hw1/src/Client.java" afterPath="$PROJECT_DIR$/hw1/src/Client.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hw1/src/Helper.java" afterPath="$PROJECT_DIR$/hw1/src/Helper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hw1/src/Server.java" afterPath="$PROJECT_DIR$/hw1/src/Server.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,12 +29,11 @@
       <file leaf-file-name="Client.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/hw1/src/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="78" column="47" lean-forward="false" selection-start-line="78" selection-start-column="47" selection-end-line="78" selection-end-column="47" />
+            <state relative-caret-position="1125">
+              <caret line="75" column="4" lean-forward="false" selection-start-line="75" selection-start-column="4" selection-end-line="75" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
-                <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
+                <marker date="1505176270000" expanded="true" signature="3303:3319" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -418,12 +415,12 @@
       <workItem from="1504813464604" duration="532000" />
       <workItem from="1504887664637" duration="2932000" />
       <workItem from="1505092343105" duration="1117000" />
-      <workItem from="1505172224955" duration="1853000" />
+      <workItem from="1505172224955" duration="2118000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31043000" />
+    <option name="totallyTimeSpent" value="31308000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -466,14 +463,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/hw1/src/Client.java</url>
-          <line>74</line>
-          <properties />
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="10" />
     </breakpoint-manager>
     <watches-manager />
@@ -553,8 +542,7 @@
           <caret line="28" column="43" lean-forward="false" selection-start-line="28" selection-start-column="43" selection-end-line="28" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
-            <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
+            <marker date="1505176270000" expanded="true" signature="3303:3319" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -596,8 +584,7 @@
           <caret line="1" column="23" lean-forward="false" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
-            <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
+            <marker date="1505176270000" expanded="true" signature="3303:3319" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -618,8 +605,7 @@
           <caret line="1" column="23" lean-forward="false" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
-            <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
+            <marker date="1505176270000" expanded="true" signature="3303:3319" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -651,8 +637,7 @@
           <caret line="1" column="23" lean-forward="false" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
-            <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
+            <marker date="1505176270000" expanded="true" signature="3303:3319" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -688,8 +673,7 @@
           <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
-            <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
+            <marker date="1505176270000" expanded="true" signature="3303:3319" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -735,8 +719,7 @@
           <caret line="87" column="0" lean-forward="true" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
-            <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
+            <marker date="1505176270000" expanded="true" signature="3303:3319" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -782,8 +765,7 @@
           <caret line="24" column="20" lean-forward="true" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
-            <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
+            <marker date="1505176270000" expanded="true" signature="3303:3319" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -918,12 +900,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/hw1/src/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="78" column="47" lean-forward="false" selection-start-line="78" selection-start-column="47" selection-end-line="78" selection-end-column="47" />
+        <state relative-caret-position="1125">
+          <caret line="75" column="4" lean-forward="false" selection-start-line="75" selection-start-column="4" selection-end-line="75" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
-            <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
+            <marker date="1505176270000" expanded="true" signature="3303:3319" ph="{...}" />
           </folding>
         </state>
       </provider>
