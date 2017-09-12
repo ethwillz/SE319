@@ -82,7 +82,7 @@ class ClientHandler extends Thread implements Runnable{
                     fw.write(message);
                     fw.flush();
 
-                    Helper.sendMessageToActiveClients(socket, message);
+                    Helper.sendMessageToActiveClients(socket, message, out);
                 }
                 else{
                     String filename = m.getTextContent().split(" ")[0]
@@ -104,7 +104,10 @@ class ClientHandler extends Thread implements Runnable{
                     fw.write((Helper.getLatestMessageID() + 1) + " " + userName + ": " + filename + "\n");
                     fw.flush();
 
-                    Helper.sendImageToActiveClients(socket, filename);
+                    Helper.sendImageToActiveClients(socket,
+                            m.getTextContent().split(" ")[0] + " " + m.getTextContent().split(" ")[1],
+                            m.getFileContent(),
+                            out);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

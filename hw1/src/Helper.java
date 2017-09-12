@@ -111,33 +111,22 @@ public class Helper {
         return lastPiece.substring(lastPiece.indexOf('.') + 1, lastPiece.length());
     }
 
-    //TODO convert this to ObjetOutputStream
-    public static void sendMessageToActiveClients(Socket socket, String message) throws IOException {
+    public static void sendMessageToActiveClients(Socket socket, String message, ObjectOutputStream out) throws IOException {
         ArrayList<Socket> activeSockets = (ArrayList<Socket>) Server.getActiveSockets();
         for (Socket s : activeSockets) {
             if (!s.equals(socket)) {
-                PrintWriter out = new PrintWriter(new BufferedOutputStream(s.getOutputStream()));
-                out.println(1);
-                out.print(message);
+                out.writeObject(new Message(1, message, null));
                 out.flush();
             }
         }
     }
 
-    //TODO convert this to ObjetOutputStream
-    public static void sendImageToActiveClients(Socket socket, String filename) throws IOException {
+    public static void sendImageToActiveClients(Socket socket, String nameAndExt, byte[] file, ObjectOutputStream out) throws IOException {
         ArrayList<Socket> activeSockets = (ArrayList<Socket>) Server.getActiveSockets();
         for (Socket s : activeSockets) {
             if (!s.equals(socket)) {
-                PrintWriter out = new PrintWriter(new BufferedOutputStream(s.getOutputStream()));
-                out.println(2);
-                out.println(filename.substring(0, filename.indexOf(".")));
-                out.println(filename.substring(filename.indexOf(".") + 1, filename.length()));
+                out.writeObject(new Message(2, nameAndExt, file));
                 out.flush();
-
-                ObjectOutputStream objOut = new ObjectOutputStream(s.getOutputStream());
-                objOut.writeObject(Files.readAllBytes(new File("." + File.separator + "image" + File.separator + filename).toPath()));
-                objOut.flush();
             }
         }
     }

@@ -4,6 +4,7 @@
     <list default="true" id="5297c775-d72b-49b8-9753-e9693a3bb1ef" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hw1/src/Client.java" afterPath="$PROJECT_DIR$/hw1/src/Client.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hw1/src/Helper.java" afterPath="$PROJECT_DIR$/hw1/src/Helper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hw1/src/Server.java" afterPath="$PROJECT_DIR$/hw1/src/Server.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,8 +19,8 @@
       <file leaf-file-name="Server.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hw1/src/Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1129">
-              <caret line="109" column="36" lean-forward="false" selection-start-line="109" selection-start-column="36" selection-end-line="109" selection-end-column="36" />
+            <state relative-caret-position="663">
+              <caret line="109" column="28" lean-forward="false" selection-start-line="109" selection-start-column="28" selection-end-line="109" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -27,15 +28,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Client.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/hw1/src/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="30" column="28" lean-forward="true" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+            <state relative-caret-position="361">
+              <caret line="78" column="47" lean-forward="false" selection-start-line="78" selection-start-column="47" selection-end-line="78" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1505175380000" expanded="true" signature="3407:3437" ph="{...}" />
-                <marker date="1505175380000" expanded="true" signature="3421:3437" ph="{...}" />
+                <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
+                <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -58,14 +59,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Helper.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hw1/src/Helper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="126" column="44" lean-forward="false" selection-start-line="126" selection-start-column="44" selection-end-line="126" selection-end-column="44" />
+            <state relative-caret-position="586">
+              <caret line="127" column="65" lean-forward="false" selection-start-line="127" selection-start-column="65" selection-end-line="127" selection-end-column="65" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1505175532000" expanded="true" signature="5394:5458" ph="{...}" />
+                <marker date="1505175985000" expanded="true" signature="4780:4839" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -94,8 +95,8 @@
         <option value="$PROJECT_DIR$/lab2/src/Activity1/MyCLient.java" />
         <option value="$PROJECT_DIR$/hw1/src/Message.java" />
         <option value="$PROJECT_DIR$/hw1/src/Server.java" />
-        <option value="$PROJECT_DIR$/hw1/src/Client.java" />
         <option value="$PROJECT_DIR$/hw1/src/Helper.java" />
+        <option value="$PROJECT_DIR$/hw1/src/Client.java" />
       </list>
     </option>
   </component>
@@ -417,12 +418,12 @@
       <workItem from="1504813464604" duration="532000" />
       <workItem from="1504887664637" duration="2932000" />
       <workItem from="1505092343105" duration="1117000" />
-      <workItem from="1505172224955" duration="1398000" />
+      <workItem from="1505172224955" duration="1853000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30588000" />
+    <option name="totallyTimeSpent" value="31043000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -430,6 +431,7 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -452,7 +454,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930514" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -552,8 +553,8 @@
           <caret line="28" column="43" lean-forward="false" selection-start-line="28" selection-start-column="43" selection-end-line="28" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505175380000" expanded="true" signature="3407:3437" ph="{...}" />
-            <marker date="1505175380000" expanded="true" signature="3421:3437" ph="{...}" />
+            <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
+            <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -564,7 +565,7 @@
           <caret line="55" column="16" lean-forward="false" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505175532000" expanded="true" signature="5394:5458" ph="{...}" />
+            <marker date="1505175985000" expanded="true" signature="4780:4839" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -595,8 +596,8 @@
           <caret line="1" column="23" lean-forward="false" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505175380000" expanded="true" signature="3407:3437" ph="{...}" />
-            <marker date="1505175380000" expanded="true" signature="3421:3437" ph="{...}" />
+            <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
+            <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -617,8 +618,8 @@
           <caret line="1" column="23" lean-forward="false" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505175380000" expanded="true" signature="3407:3437" ph="{...}" />
-            <marker date="1505175380000" expanded="true" signature="3421:3437" ph="{...}" />
+            <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
+            <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -629,7 +630,7 @@
           <caret line="41" column="35" lean-forward="false" selection-start-line="41" selection-start-column="35" selection-end-line="41" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505175532000" expanded="true" signature="5394:5458" ph="{...}" />
+            <marker date="1505175985000" expanded="true" signature="4780:4839" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -650,8 +651,8 @@
           <caret line="1" column="23" lean-forward="false" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505175380000" expanded="true" signature="3407:3437" ph="{...}" />
-            <marker date="1505175380000" expanded="true" signature="3421:3437" ph="{...}" />
+            <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
+            <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -662,7 +663,7 @@
           <caret line="41" column="35" lean-forward="true" selection-start-line="41" selection-start-column="35" selection-end-line="41" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505175532000" expanded="true" signature="5394:5458" ph="{...}" />
+            <marker date="1505175985000" expanded="true" signature="4780:4839" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -687,8 +688,8 @@
           <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505175380000" expanded="true" signature="3407:3437" ph="{...}" />
-            <marker date="1505175380000" expanded="true" signature="3421:3437" ph="{...}" />
+            <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
+            <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -699,7 +700,7 @@
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505175532000" expanded="true" signature="5394:5458" ph="{...}" />
+            <marker date="1505175985000" expanded="true" signature="4780:4839" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -734,8 +735,8 @@
           <caret line="87" column="0" lean-forward="true" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505175380000" expanded="true" signature="3407:3437" ph="{...}" />
-            <marker date="1505175380000" expanded="true" signature="3421:3437" ph="{...}" />
+            <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
+            <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -746,7 +747,7 @@
           <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505175532000" expanded="true" signature="5394:5458" ph="{...}" />
+            <marker date="1505175985000" expanded="true" signature="4780:4839" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -781,8 +782,8 @@
           <caret line="24" column="20" lean-forward="true" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505175380000" expanded="true" signature="3407:3437" ph="{...}" />
-            <marker date="1505175380000" expanded="true" signature="3421:3437" ph="{...}" />
+            <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
+            <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -879,6 +880,16 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/hw1/src/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="109" column="28" lean-forward="false" selection-start-line="109" selection-start-column="28" selection-end-line="109" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/hw1/src/Message.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -894,35 +905,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hw1/src/Server.java">
+    <entry file="file://$PROJECT_DIR$/hw1/src/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1129">
-          <caret line="109" column="36" lean-forward="false" selection-start-line="109" selection-start-column="36" selection-end-line="109" selection-end-column="36" />
+        <state relative-caret-position="586">
+          <caret line="127" column="65" lean-forward="false" selection-start-line="127" selection-start-column="65" selection-end-line="127" selection-end-column="65" />
           <folding>
             <element signature="imports" expanded="true" />
+            <marker date="1505175985000" expanded="true" signature="4780:4839" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hw1/src/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="30" column="28" lean-forward="true" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+        <state relative-caret-position="361">
+          <caret line="78" column="47" lean-forward="false" selection-start-line="78" selection-start-column="47" selection-end-line="78" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1505175380000" expanded="true" signature="3407:3437" ph="{...}" />
-            <marker date="1505175380000" expanded="true" signature="3421:3437" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hw1/src/Helper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="126" column="44" lean-forward="false" selection-start-line="126" selection-start-column="44" selection-end-line="126" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1505175532000" expanded="true" signature="5394:5458" ph="{...}" />
+            <marker date="1505176006000" expanded="true" signature="3455:3485" ph="{...}" />
+            <marker date="1505176006000" expanded="true" signature="3469:3485" ph="{...}" />
           </folding>
         </state>
       </provider>

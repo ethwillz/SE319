@@ -76,6 +76,7 @@ class ServerListener implements Runnable{
         objIn = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
     }
 
+    //TODO Convert this to using Object streams
     public void run() {
         while(true){
             if(in.hasNextLine()) {
