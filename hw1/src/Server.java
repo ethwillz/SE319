@@ -33,7 +33,7 @@ public class Server {
 
                 System.out.println("Server connected to " + userName);
 
-                Thread t = new Thread(new ClientHandler(clientSocket, userName, in, objOut));
+                Thread t = new Thread(new ClientHandler(clientSocket, userName));
                 t.start();
 
             } catch (IOException e) {
@@ -50,79 +50,64 @@ public class Server {
 class ClientHandler extends Thread implements Runnable{
     private Socket socket;
     private String userName;
-    private Scanner in;
     private File file;
     private FileWriter fw;
+    private ObjectInputStream in;
+    private ObjectOutputStream out;
 
-    ClientHandler(Socket socket, String userName, Scanner in, ObjectOutputStream objOut){
+    ClientHandler(Socket socket, String userName) throws IOException {
         this.socket = socket;
         this.userName = userName;
-        this.in = in;
+        in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+        out = new ObjectOutputStream((new BufferedOutputStream(socket.getOutputStream())));
     }
 
     public void run(){
         while(true){
-            if(in.hasNextLine()) {
-                int type = Integer.parseInt(in.nextLine());
-                if (type == 0) {
+            try {
+                Message m = (Message) in.readObject();
+
+                if(m.getMessageCode() == 0){
                     break;
-                } else if (type == 1) {
-                    try {
-                        String message = in.nextLine();
-
-                        //Add to chat.txt
-                        StringBuilder sb = new StringBuilder();
-                        sb.append(Helper.getLatestMessageID() + 1);
-                        sb.append(" ");
-                        sb.append(userName);
-                        sb.append(": ");
-                        sb.append(message);
-                        sb.append("\n");
-                        message = sb.toString();
-
-                        System.out.println(message);
-
-                        file = new File("." + File.separator + "chat.txt");
-                        fw = new FileWriter(file, true);
-                        fw.write(message);
-                        fw.flush();
-
-                        Helper.sendMessageToActiveClients(socket, message);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        ObjectInputStream objIn = new ObjectInputStream(socket.getInputStream());
-                        String name = in.nextLine();
-                        String ext = in.nextLine();
-
-                        //Add to image folder
-                        String filename = name
-                                + "_" + userName
-                                + "_" + Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-                                + "_" + Calendar.getInstance().get(Calendar.MINUTE)
-                                + "." + ext;
-                        System.out.println(filename);
-
-                        new File("." + File.separator + "image").mkdir();
-
-                        FileOutputStream fos = new FileOutputStream("." + File.separator + "image" + File.separator + filename);
-                        fos.write((byte[]) objIn.readObject());
-
-                        //Write to chat.txt
-                        file = new File("." + File.separator + "chat.txt");
-                        fw = new FileWriter(file, true);
-                        fw.write((Helper.getLatestMessageID() + 1) + " " + userName + ": " + filename + "\n");
-                        fw.flush();
-
-                        Helper.sendImageToActiveClients(socket, filename);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                 }
+                else if(m .getMessageCode() == 1){
+                    String message = (Helper.getLatestMessageID() + 1)
+                            + " " + userName
+                            + ": " + m.getTextContent() + "\n";
+
+                    System.out.print(message);
+
+                    file = new File("." + File.separator + "chat.txt");
+                    fw = new FileWriter(file, true);
+                    fw.write(message);
+                    fw.flush();
+
+                    Helper.sendMessageToActiveClients(socket, message);
+                }
+                else{
+                    String filename = m.getTextContent().split(" ")[0]
+                            + "_" + userName
+                            + "_" + Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+                            + "_" + Calendar.getInstance().get(Calendar.MINUTE)
+                            + "." + m.getTextContent().split(" ")[1];
+
+                    System.out.println(filename);
+
+                    new File("." + File.separator + "image").mkdir();
+
+                    FileOutputStream fos = new FileOutputStream("." + File.separator + "image" + File.separator + filename);
+                    fos.write(m.getFileContent());
+
+                    //Write to chat.txt
+                    file = new File("." + File.separator + "chat.txt");
+                    fw = new FileWriter(file, true);
+                    fw.write((Helper.getLatestMessageID() + 1) + " " + userName + ": " + filename + "\n");
+                    fw.flush();
+
+                    Helper.sendImageToActiveClients(socket, filename);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
