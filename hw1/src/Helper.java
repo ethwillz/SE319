@@ -34,28 +34,25 @@ public class Helper {
         }
     }
 
-    public static void sendTextMessage(Scanner in, PrintWriter out) throws IOException{
+    public static void sendTextMessage(Scanner in, ObjectOutputStream out) throws IOException{
         System.out.println("Please type in a message, then press Enter");
 
-        out.println("1");
-        out.println(in.nextLine());
+        String message = in.nextLine();
+
+        out.writeObject(new Message(1, message, null));
         out.flush();
     }
 
-    public static void sendImage(Socket socket, Scanner in, PrintWriter out) throws IOException{
+    public static void sendImage(Socket socket, Scanner in, ObjectOutputStream out) throws IOException{
         System.out.println("Specify the filepath of the image, then press Enter");
 
         String path = in.nextLine();
         File file = new File(path);
-        ;
-        out.println("2");
-        out.println(Helper.getImageName(file));
-        out.println(Helper.getImageExtension(file));
-        out.flush();
 
-        ObjectOutputStream objOut = new ObjectOutputStream(socket.getOutputStream());
-        objOut.writeObject(Files.readAllBytes(file.toPath()));
-        objOut.flush();
+        out.writeObject(new Message(2,
+                Helper.getImageName(file) + Helper.getImageExtension(file),
+                Files.readAllBytes(file.toPath())));
+        out.flush();
     }
 
     public static void printChatHistory() throws FileNotFoundException {
@@ -114,6 +111,7 @@ public class Helper {
         return lastPiece.substring(lastPiece.indexOf('.') + 1, lastPiece.length());
     }
 
+    //TODO convert this to ObjetOutputStream
     public static void sendMessageToActiveClients(Socket socket, String message) throws IOException {
         ArrayList<Socket> activeSockets = (ArrayList<Socket>) Server.getActiveSockets();
         for (Socket s : activeSockets) {
@@ -126,6 +124,7 @@ public class Helper {
         }
     }
 
+    //TODO convert this to ObjetOutputStream
     public static void sendImageToActiveClients(Socket socket, String filename) throws IOException {
         ArrayList<Socket> activeSockets = (ArrayList<Socket>) Server.getActiveSockets();
         for (Socket s : activeSockets) {

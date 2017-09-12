@@ -18,23 +18,46 @@ public class Client {
         out.println(userName);
         out.flush();
 
-        int choice;
         boolean isAdmin = userName.toLowerCase().equals("admin");
 
+        Thread t2 = new Thread(new ServerInteraction(socket, in, isAdmin));
+    }
+}
+
+class ServerInteraction implements Runnable{
+    private int choice;
+    private Socket socket;
+    private Scanner in;
+    private boolean isAdmin;
+    private ObjectOutputStream out;
+
+    public ServerInteraction(Socket socket, Scanner in, boolean isAdmin) throws IOException {
+        this.socket = socket;
+        this.in = in;
+        this.isAdmin = isAdmin;
+        out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+    }
+
+    public void run(){
         while(true) {
-            choice = Helper.getChoice(in, isAdmin);
-            if (choice == 1) {
-                Helper.sendTextMessage(in, out);
-            } else if (choice == 2) {
-                Helper.sendImage(socket, in, out);
-            } else if(isAdmin && choice == 3){
-                Helper.printChatHistory();
-            } else if(isAdmin && choice == 4){
-                Helper.deleteMessageFromHistory();
-            }else {
-                out.println(0); //Exit code for server to quit thread
-                out.flush();
-                return; //ServerListener will be garbage collected
+            try {
+                choice = Helper.getChoice(in, isAdmin);
+                if (choice == 1) {
+                    Helper.sendTextMessage(in, out);
+                } else if (choice == 2) {
+                    Helper.sendImage(socket, in, out);
+                } else if (isAdmin && choice == 3) {
+                    Helper.printChatHistory();
+                } else if (isAdmin && choice == 4) {
+                    Helper.deleteMessageFromHistory();
+                } else {
+                    out.writeObject(new Message(0, null, null)); //Exit code for server to quit thread
+                    out.flush();
+                    return; //ServerListener will be garbage collected
+                }
+            }
+            catch(Exception e){
+                e.printStackTrace();
             }
         }
     }
