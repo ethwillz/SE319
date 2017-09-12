@@ -1,13 +1,13 @@
+import javafx.util.Pair;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Scanner;
 
 public class Server {
-    public static List<Socket> activeSockets;
+    private static ArrayList<Pair<Socket, ObjectOutputStream>> activeSockets;
 
     public static void main(String[] args){
         ServerSocket serverSocket = null;
@@ -23,18 +23,17 @@ public class Server {
         while(true){
             try {
                 Socket clientSocket = serverSocket.accept();
-                activeSockets.add(clientSocket);
 
-                ObjectOutputStream objOut = new ObjectOutputStream(clientSocket.getOutputStream());
-                objOut.flush();
+                ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
 
-                Scanner in = new Scanner(new BufferedInputStream(clientSocket.getInputStream()));
-                String userName = in.nextLine();
+                activeSockets.add(new Pair(clientSocket, out));
 
+                ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(clientSocket.getInputStream()));
+                String userName = in.readUTF();
                 System.out.println("Server connected to " + userName);
 
-                Thread t = new Thread(new ClientHandler(clientSocket, userName));
-                t.start();
+                Thread handler = new Thread(new ClientHandler(clientSocket, userName, in));
+                handler.start();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -42,7 +41,7 @@ public class Server {
         }
     }
 
-    public static List<Socket> getActiveSockets(){
+    static ArrayList<Pair<Socket, ObjectOutputStream>> getActiveSockets(){
         return activeSockets;
     }
 }
@@ -50,16 +49,12 @@ public class Server {
 class ClientHandler extends Thread implements Runnable{
     private Socket socket;
     private String userName;
-    private File file;
-    private FileWriter fw;
     private ObjectInputStream in;
-    private ObjectOutputStream out;
 
-    ClientHandler(Socket socket, String userName) throws IOException {
+    ClientHandler(Socket socket, String userName, ObjectInputStream in) throws IOException {
         this.socket = socket;
         this.userName = userName;
-        in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-        out = new ObjectOutputStream((new BufferedOutputStream(socket.getOutputStream())));
+        this.in = in;
     }
 
     public void run(){
@@ -67,6 +62,8 @@ class ClientHandler extends Thread implements Runnable{
             try {
                 Message m = (Message) in.readObject();
 
+                File file;
+                FileWriter fw;
                 if(m.getMessageCode() == 0){
                     break;
                 }
@@ -82,14 +79,14 @@ class ClientHandler extends Thread implements Runnable{
                     fw.write(message);
                     fw.flush();
 
-                    Helper.sendMessageToActiveClients(socket, message, out);
+                    Helper.sendMessageToActiveClients(socket, message);
                 }
                 else{
-                    String filename = m.getTextContent().split(" ")[0]
+                    String filename = m.getTextContent().split(", ")[0]
                             + "_" + userName
                             + "_" + Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
                             + "_" + Calendar.getInstance().get(Calendar.MINUTE)
-                            + "." + m.getTextContent().split(" ")[1];
+                            + "." + m.getTextContent().split(", ")[1];
 
                     System.out.println(filename);
 
@@ -105,9 +102,8 @@ class ClientHandler extends Thread implements Runnable{
                     fw.flush();
 
                     Helper.sendImageToActiveClients(socket,
-                            m.getTextContent().split(" ")[0] + " " + m.getTextContent().split(" ")[1],
-                            m.getFileContent(),
-                            out);
+                            Helper.getImageName(new File(filename)) + ", " + Helper.getImageExtension(new File(filename)),
+                            m.getFileContent());
                 }
             } catch (Exception e) {
                 e.printStackTrace();

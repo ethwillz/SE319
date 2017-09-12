@@ -1,12 +1,14 @@
+import javafx.util.Pair;
+
 import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Helper {
+class Helper {
 
-    public static int getChoice(Scanner in, boolean isAdmin){
+     static int getChoice(Scanner in, boolean isAdmin){
         int choice;
 
         System.out.println("Press (1) to send a text message to the server\nOr (2) to send an image to the server");
@@ -34,7 +36,7 @@ public class Helper {
         }
     }
 
-    public static void sendTextMessage(Scanner in, ObjectOutputStream out) throws IOException{
+     static void sendTextMessage(Scanner in, ObjectOutputStream out) throws IOException{
         System.out.println("Please type in a message, then press Enter");
 
         String message = in.nextLine();
@@ -43,19 +45,19 @@ public class Helper {
         out.flush();
     }
 
-    public static void sendImage(Socket socket, Scanner in, ObjectOutputStream out) throws IOException{
+    static void sendImage(Socket socket, Scanner in, ObjectOutputStream out) throws IOException{
         System.out.println("Specify the filepath of the image, then press Enter");
 
         String path = in.nextLine();
         File file = new File(path);
 
         out.writeObject(new Message(2,
-                Helper.getImageName(file) + Helper.getImageExtension(file),
+                Helper.getImageName(file) + ", " + Helper.getImageExtension(file),
                 Files.readAllBytes(file.toPath())));
         out.flush();
     }
 
-    public static void printChatHistory() throws FileNotFoundException {
+    static void printChatHistory() throws FileNotFoundException {
         File file = new File("." + File.separator + "chat.txt");
         Scanner in = new Scanner(file);
         while(in.hasNextLine()){
@@ -63,7 +65,7 @@ public class Helper {
         }
     }
 
-    public static void deleteMessageFromHistory() throws IOException {
+    static void deleteMessageFromHistory() throws IOException {
         System.out.println("Please type in a message ID to delete and press Enter");
 
         Scanner in = new Scanner(System.in);
@@ -84,7 +86,7 @@ public class Helper {
         tempFile.renameTo(file);
     }
 
-    public static int getLatestMessageID() throws FileNotFoundException {
+    static int getLatestMessageID() throws FileNotFoundException {
         File file = new File("." + File.separator + "chat.txt");
         Scanner in = new Scanner(file);
         String lastScanned = "";
@@ -99,34 +101,34 @@ public class Helper {
         }
     }
 
-    public static String getImageName(File file){
+    static String getImageName(File file){
         String[] pathSeparated = file.getAbsolutePath().split("/");
         String lastPiece = pathSeparated[pathSeparated.length - 1];
         return lastPiece.substring(0, lastPiece.indexOf('.'));
     }
 
-    public static String getImageExtension(File file){
+    static String getImageExtension(File file){
         String[] pathSeparated = file.getAbsolutePath().split("/");
         String lastPiece = pathSeparated[pathSeparated.length - 1];
         return lastPiece.substring(lastPiece.indexOf('.') + 1, lastPiece.length());
     }
 
-    public static void sendMessageToActiveClients(Socket socket, String message, ObjectOutputStream out) throws IOException {
-        ArrayList<Socket> activeSockets = (ArrayList<Socket>) Server.getActiveSockets();
-        for (Socket s : activeSockets) {
-            if (!s.equals(socket)) {
-                out.writeObject(new Message(1, message, null));
-                out.flush();
+    static void sendMessageToActiveClients(Socket socket, String message) throws IOException {
+        ArrayList<Pair<Socket, ObjectOutputStream>> activeSockets = Server.getActiveSockets();
+        for (Pair<Socket, ObjectOutputStream> socketOutput : activeSockets) {
+            if (!socketOutput.getKey().equals(socket)) {
+                socketOutput.getValue().writeObject(new Message(1, message, null));
+                socketOutput.getValue().flush();
             }
         }
     }
 
-    public static void sendImageToActiveClients(Socket socket, String nameAndExt, byte[] file, ObjectOutputStream out) throws IOException {
-        ArrayList<Socket> activeSockets = (ArrayList<Socket>) Server.getActiveSockets();
-        for (Socket s : activeSockets) {
-            if (!s.equals(socket)) {
-                out.writeObject(new Message(2, nameAndExt, file));
-                out.flush();
+    static void sendImageToActiveClients(Socket socket, String nameAndExt, byte[] file) throws IOException {
+        ArrayList<Pair<Socket, ObjectOutputStream>> activeSockets = Server.getActiveSockets();
+        for (Pair<Socket, ObjectOutputStream> socketOutput : activeSockets) {
+            if (!socketOutput.getKey().equals(socket)) {
+                socketOutput.getValue().writeObject(new Message(2, nameAndExt, file));
+                socketOutput.getValue().flush();
             }
         }
     }
