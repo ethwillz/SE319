@@ -88,6 +88,9 @@ class Helper {
 
     static int getLatestMessageID() throws FileNotFoundException {
         File file = new File("." + File.separator + "chat.txt");
+        if(!file.exists()){
+            return 0;
+        }
         Scanner in = new Scanner(file);
         String lastScanned = "";
         while(in.hasNextLine()){
