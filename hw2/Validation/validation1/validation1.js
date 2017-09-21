@@ -1,14 +1,28 @@
 function validateAndChange(){
   var canChange = 0;
-  canChange += document.getElementById('firstName').value != "" ? validate('firstName') : invalidate('firstName');
-  canChange += document.getElementById('lastName').value != "" ? validate('lastName') : invalidate('lastName');
+  var firstName = document.getElementById('firstName');
+  if(firstName != "" || /[^a-zA-Z0-9]/.test(firstName)){
+    validate('firstName');
+  }
+  else{
+    canChange += invalidate('firstName');
+  }
+
+  var lastName = document.getElementById('lastName');
+  if(lastName != "" || /[^a-zA-Z0-9]/.test(lastName)){
+    validate('lastName');
+  }
+  else{
+    canChange += invalidate('lastName');
+  }
+
   canChange += document.getElementById('gender').value != "" ? validate('gender') : invalidate('gender');
   canChange += document.getElementById('state').value != "" ? validate('state') : invalidate('state');
+
   if(canChange === 0){
     window.location.href = '../validation2/validation2.html';
     return false;
   }
-  return false;
 }
 
 function validate(element){
