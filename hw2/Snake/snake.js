@@ -4,12 +4,12 @@ $(document).ready(function () {
   ctx.strokeStyle = "blue";
   ctx.lineWidth = 1;
 
-  var xDir = 0;
-  var yDir = 1;
+  var xDir = 1;
+  var yDir = 0;
   var xPos = 0;
   var yPos = canvas.height / 2;
   var started = 0;
-  var escape = 0;
+  var game;
 
   document.addEventListener("keydown", function(key){
 
@@ -19,18 +19,8 @@ $(document).ready(function () {
       beginGame(ctx);
     }
 
+    //TODO revise these to be correct
     if(key.code == "ArrowLeft"){
-      if(xDir == 0){
-        xDir = -1 * yDir;
-        yDir = 0;
-      }
-      else{
-        yDir = -1 * xDir;
-        xDir = 0;
-      }
-    }
-
-    if(key.code == "ArrowRight"){
       if(xDir == 0){
         xDir = yDir;
         yDir = 0;
@@ -41,15 +31,33 @@ $(document).ready(function () {
       }
     }
 
+    //TODO revise these to be correct
+    if(key.code == "ArrowRight"){
+      if(xDir == 0){
+        xDir = -1 * yDir;
+        yDir = 0;
+      }
+      else{
+        yDir = xDir;
+        xDir = 0;
+      }
+    }
+
+    if(key.code == "Escape"){
+      clearInterval(game);
+    }
+
   });
 
   function beginGame(ctx){
-    while(true){
-      setInterval(moveOne(), 500)
-    }
+      game = setInterval(moveOne, 15);
   }
 
   function moveOne(){
+    if(xPos + xDir < 0 || yPos + yDir < 0){
+      clearInterval(game);
+      alert("You hit the egde fam");
+    }
     ctx.moveTo(xPos, yPos);
     ctx.lineTo(xPos + xDir, yPos + yDir);
     ctx.stroke();
