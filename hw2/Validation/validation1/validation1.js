@@ -1,15 +1,16 @@
 function validateAndChange(){
   var canChange = 0;
-  var firstName = document.getElementById('firstName');
-  if(firstName != "" || /[^a-zA-Z0-9]/.test(firstName)){
+  var storedState = 0;
+  var firstName = document.getElementById('firstName').value;
+  if(firstName != "" && /^([0-9]|[a-z])+([0-9a-z]+)$/i.test(firstName)){
     validate('firstName');
   }
   else{
     canChange += invalidate('firstName');
   }
 
-  var lastName = document.getElementById('lastName');
-  if(lastName != "" || /[^a-zA-Z0-9]/.test(lastName)){
+  var lastName = document.getElementById('lastName').value;
+  if(lastName != "" && /^([0-9]|[a-z])+([0-9a-z]+)$/i.test(lastName)){
     validate('lastName');
   }
   else{
@@ -20,6 +21,7 @@ function validateAndChange(){
   canChange += document.getElementById('state').value != "" ? validate('state') : invalidate('state');
 
   if(canChange === 0){
+    localStorage.setItem("state", document.getElementById('state').value);
     window.location.href = '../validation2/validation2.html';
     return false;
   }

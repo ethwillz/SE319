@@ -19,7 +19,6 @@ $(document).ready(function () {
       beginGame(ctx);
     }
 
-    //TODO revise these to be correct
     if(key.code == "ArrowLeft"){
       if(xDir == 0){
         xDir = yDir;
@@ -31,7 +30,6 @@ $(document).ready(function () {
       }
     }
 
-    //TODO revise these to be correct
     if(key.code == "ArrowRight"){
       if(xDir == 0){
         xDir = -1 * yDir;
@@ -45,6 +43,7 @@ $(document).ready(function () {
 
     if(key.code == "Escape"){
       clearInterval(game);
+      started = 0;
     }
 
   });
@@ -56,7 +55,7 @@ $(document).ready(function () {
   function moveOne(){
     if(xPos + xDir < 0 || yPos + yDir < 0){
       clearInterval(game);
-      alert("You hit the egde fam");
+      alert("You hit the egde");
     }
     ctx.moveTo(xPos, yPos);
     ctx.lineTo(xPos + xDir, yPos + yDir);

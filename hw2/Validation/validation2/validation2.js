@@ -1,33 +1,90 @@
 function validateAndChange(){
   var dotCount = 0;
   var atCount = 0;
+  var dashCount = 0;
+  var errorsExist = 0;
 
   var email = document.getElementById('email').value;
   validate('email');
-  email.foreach(function(element){
-    if(element == '@' && atCount == 0){
+  if(email.length == 0){
+    invalidate('email');
+    errorsExist++;
+  }
+  for(var i = 0; i < email.length; i++){
+    if(email[i] == '@'){
+      if(!/^[a-z0-9]+$/i.test(email[i+1])){
+        atCount++;
+      }
       atCount++;
     }
-    else if(element == '@' && atCount > 0){
-      invalidate('email');
-      break;
-    }
-    else if(element == '.' && dotCount == 0){
+    else if(email[i] == '.'){
+      if(!/^[a-z0-9]+$/i.test(email[i+1])){
+        dotCount++;
+      }
       dotCount++;
     }
-    else if(element == '.' && dotCount > 0){
-      invalidate('email');
-      break;
+    else{
+      if(!/^[a-z0-9]+$/i.test(email[i])){
+        invalidate('email');
+        errorsExist++;
+      }
     }
-    else if(/[^a-zA-Z0-9]/.test(element) == false){
-      invalidate('email');
-      break;
-    }
-  });
+  }
+  if(dotCount != 1 || atCount != 1){
+    invalidate('email');
+    errorsExist++;
+  }
 
-  //TODO validate phone and address as per rules
-  canChange += document.getElementById('phone').value != "" ? validate('lastName') : invalidate('lastName');
-  canChange += document.getElementById('address').value != "" ? validate('gender') : invalidate('gender');
+  var phone = document.getElementById('phone').value;
+  validate('phone');
+  if(phone.length == 0){
+    invalidate('phone');
+    errorsExist++;
+  }
+  if(phone.includes("-")){
+    if(phone.length != 12){
+      invalidate('phone');
+      errorsExist++;
+    }
+    for(var i = 0; i < phone.length; i++){
+      if(i == 3 || i == 7){
+        if(phone[i] != '-'){
+          invalidate('phone');
+          errorsExist++;
+        }
+      }
+      else{
+        if(!/^\d+$/.test(phone[i])){
+          invalidate('phone');
+          errorsExist++;
+        }
+      }
+    }
+  }
+  else{
+    if(phone.length != 10){
+      invalidate('phone');
+      errorsExist++;
+    }
+    if(!/^\d+$/.test(phone)){
+      invalidate('phone');
+      errorsExist++;
+    }
+  }
+
+  var address = document.getElementById('address').value;
+  var broken = address.split(",");
+  validate('address');
+  if(broken.length != 2){
+    invalidate("address");
+    errorsExist++;
+  }
+
+  if(errorsExist == 0){
+    localStorage.setItem('address', address);
+    window.location.href = '../map/map.html';
+    return false;
+  }
 
   return false;
 }
