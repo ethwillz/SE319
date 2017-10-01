@@ -1,0 +1,26 @@
+body{
+  height: 100%;
+}
+
+#form-container{
+  height: 100%;
+  flex-direction: row;
+  display: flex;
+}
+
+form{
+  margin: auto;
+  width: 16%;
+}
+
+#input > input{
+  width: 100%;
+}
+
+.button-group{
+  display: flex;
+}
+
+.button-group > button{
+  flex: 1;
+}
