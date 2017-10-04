@@ -2,13 +2,54 @@ $(document).ready(function(){
   generateDecimalFrontEnd();
 });
 
-var expression = "";
-var lastOperation = "";
-var overwrite = 0;
-localStorage.memoryVal = "0";
+(function(){
+  var expression = "";
+  var lastOperation = "";
+  var overwrite = 0;
+  var memoryVal = 0;
+
+  function stateVariables(exp, val){
+
+    if(exp == 'expression'){
+      return expression;
+    }
+    if(exp == 'lastOperation'){
+      return lastOperation;
+    }
+    if(exp == 'overwrite'){
+      return overwrite;
+    }
+    if(exp == 'memoryVal'){
+      return memoryVal;
+    }
+
+    if(exp == 'clear'){
+      document.getElementsByTagName('form')[0].innerHTML = "";
+      expression = "";
+      lastOperation = "";
+      overwrite = 0;
+      memoryVal = "0";
+    }
+
+    if(exp == 'setExpression'){
+      expression = val;
+    }
+    if(exp == 'setLastOperation'){
+      lastOperation = val;
+    }
+    if(exp == 'setOverwrite'){
+      overwrite = val;
+    }
+    if(exp == 'setMemoryVal'){
+      memoryVal = val;
+    }
+  }
+
+  window.stateVariables = stateVariables;
+})();
 
 function toggle(type){
-  clearShit();
+  stateVariables('clear', '');
 
   if(type == 'decimal'){
     generateDecimalFrontEnd();
@@ -27,51 +68,44 @@ function toggle(type){
 
 }
 
-function clearShit(){
-
-  document.getElementsByTagName('form')[0].innerHTML = "";
-  expression = "";
-  lastOperation = "";
-  overwrite = 0;
-  localStorage.memoryVal = "0";
-
-}
-
 function handleDecimalClick(el){
+  var temp;
 
-  if(overwrite == 1){
+  if(stateVariables('overwrite', '') == 1){
     document.getElementsByTagName('input')[0].value = "";
-    overwrite = 0;
+    stateVariables('setOverwrite', 0);
   }
   if(el.target.innerHTML == '='){
-    var val = eval(expression);
-    if(/^[0-9]*$/.test(expression)){
-      val = eval(expression + lastOperation);
+    var val = eval(stateVariables('expression', ''));
+    if(/^[0-9]*$/.test(stateVariables('expression', ''))){
+      val = eval(stateVariables('expression', '') + stateVariables('lastOperation', ''));
     }
     document.getElementsByTagName('input')[0].value = val;
-    expression = val;
+    stateVariables('setExpression', val);
   }
   else if(el.target.innerHTML == 'C'){
     document.getElementsByTagName('input')[0].value = "";
-    expression = "";
-    lastOperation = "";
+    stateVariables('setExpression', '');
+    stateVariables('setLastOperation', '');
   }
   else if(el.target.innerHTML == 'MR'){
-    document.getElementsByTagName('input')[0].value = localStorage.memoryVal;
-    overwrite = 1;
+    document.getElementsByTagName('input')[0].value = stateVariables('memoryVal', '');
+    stateVariables('setOverwrite', 1);
   }
   else if(el.target.innerHTML == 'M-'){
-    localStorage.memoryVal = parseInt(localStorage.memoryVal)
+    temp = parseInt(stateVariables('memoryVal', ''))
       - document.getElementsByTagName('input')[0].value
       + "";
+      stateVariables('setMemoryVal', temp);
   }
   else if(el.target.innerHTML == 'M+'){
-    localStorage.memoryVal = eval(localStorage.memoryVal
+    temp = eval(stateVariables('memoryVal', '')
       + "+" + document.getElementsByTagName('input')[0].value)
       + "";
+      stateVariables('setMemoryVal', temp);
   }
   else if(el.target.innerHTML == 'MC'){
-    localStorage.memoryVal = "0";
+    stateVariables('setMemoryVal', 0)
   }
   else{
     addToDecimalExpression(el.target.innerHTML);
@@ -116,15 +150,20 @@ function generateDecimalFrontEnd(){
 
 function addToDecimalExpression(value){
 
-  var operators = [ "/", "*", "+", "-"];
+  var operators = [ "/", "*", "+", "-", "<<", ">>"];
+  var temp;
 
   if(operators.includes(value)){
-    lastOperation = value;
+    stateVariables('setLastOperation', value);
   }
   else{
-    lastOperation += value;
+    temp = stateVariables('lastOperation', '');
+    temp += value;
+    stateVariables('setLastOperation', temp);
   }
 
-  expression += value;
+  temp = stateVariables('expression', '');
+  temp += value;
+  stateVariables('setExpression', temp);
   document.getElementsByTagName('input')[0].value += value;
 }

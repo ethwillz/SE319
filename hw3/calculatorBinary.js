@@ -1,28 +1,36 @@
 function handleBinaryClick(el){
 
   if(el.target.innerHTML == '='){
-
-    var val;
-    if(expression.indexOf("~") > -1){
-      op = expression.indexOf("~");
-      var val = eval(expression.substring(0, op));
+    var expression = stateVariables('expression', '');
+    if(/^[0-9]*$/.test(expression)){
+      val = eval(expression + stateVariables('lastOperation', ''));
+      document.getElementsByTagName('input')[0].value = val.toString(2);
+      stateVariables('setExpression', val);
+    }
+    else if(expression.indexOf("~") > -1){
+      evaluate("~", expression);
     }
     else if(expression.indexOf("<<") > -1){
-      evaluate("<<");
+      evaluate("<<", expression);
     }
     else if(expression.indexOf(">>") > -1){
-      evaluate(">>");
+      evaluate(">>", expression);
     }
     else if(expression.indexOf("&") > -1){
-      evaluate(">>");
+      evaluate("&", expression);
     }
     else if(expression.indexOf("+") > -1){
-      evaluate("+");
+      evaluate("+", expression);
     }
     else{
-      evaluate("");
+      evaluate("", expression);
     }
 
+  }
+  else if(el.target.innerHTML == 'C'){
+    document.getElementsByTagName('input')[0].value = "";
+    stateVariables('setExpression', '');
+    stateVariables('setLastOperation', '');
   }
   else{
     addToBinaryExpression(el.target.innerHTML);
@@ -30,28 +38,42 @@ function handleBinaryClick(el){
 
 }
 
-function evaluate(operator){
+function evaluate(operator, expression){
 
+  var val = "";
+  var oneHit = false;
   opIndex = expression.indexOf(operator);
   if(operator == ""){
     val = eval(expression);
   }
-  else{
-    if(operator == "+"){
-      operator = "-";
+  else if(operator == "~"){
+    for(var i = 0; i < expression.length - 1; i++){
+      tempVal = Math.abs(eval(expression[i] + "-1"));
+      if(tempVal == "0" && oneHit == true){
+        val += tempVal
+      }
+      if(tempVal == "1"  && oneHit == false){
+        val += tempVal;
+        oneHit = true;
+      }
     }
+  }
+  else{
     var first = parseInt(expression.substring(0, opIndex), 2);
-    var second = parseInt(expression.substring(opIndex + 1, expression.length), 2)
+    var second = parseInt(expression.substring(opIndex + operator.length, expression.length), 2)
     var val = eval(first + operator + second);
   }
 
+  if(val.length == 0){
+    val = '0';
+  }
   document.getElementsByTagName('input')[0].value = val.toString(2);
-  expression = val;
+  stateVariables('setExpression', val);
 }
 
 function generateBinaryFrontEnd(){
 
-  var keys = [ "0", "1", "", "", "<<", ">>", "&", "~", "+", "/", "%", "="];
+  var keys = [ "0", "1", "", "C", "<<", ">>", "&", "~", "+", "/", "%", "="];
 
   var form = document.getElementsByTagName('form')[0];
   var input = form.appendChild(document.createElement('div'));
@@ -87,13 +109,27 @@ function addToBinaryExpression(value){
   var decVal;
   var operators = [ "<<", ">>", "&", "~", "+", "/", "%"];
 
+  if(value == "&lt;&lt;"){
+    value = "<<"
+  }
+  if(value == "&gt;&gt;"){
+    value = ">>";
+  }
+  if(value == "&amp;"){
+    value = "&";
+  }
+
   if(operators.includes(value)){
-    lastOperation = value;
+    stateVariables('setLastOperation', value);
   }
   else{
-    lastOperation += value;
+    temp = stateVariables('lastOperation', '');
+    temp += value;
+    stateVariables('setLastOperation', temp);
   }
-  
-  expression += value;
+
+  temp = stateVariables('expression', '');
+  temp += value;
+  stateVariables('setExpression', temp);
   document.getElementsByTagName('input')[0].value += value;
 }
