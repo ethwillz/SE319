@@ -1,0 +1,72 @@
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable = yes" />
+    <title>Calculator</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="calculator.js"></script>
+    <script src="calculatorBinary.js"></script>
+  </head>
+
+  <body>
+
+    <div id="form-container">
+
+      <div id="button-container">
+        <button onclick="toggle('decimal')" id="decimal" class="btn btn-primary">Decimal</button>
+        <button onclick="toggle('binary')" id="binary" class="btn btn-secondary">Binary</button>
+      </div>
+
+      <form>
+      </form>
+
+    </div>
+
+    <style>
+      body{
+        height: 100%;
+      }
+
+      #form-container{
+        height: 100%;
+        flex-direction: column;
+        display: flex;
+      }
+
+      #button-container{
+        text-align: center;
+        margin: auto;
+        width: 16%;
+        margin-bottom: 30px;
+      }
+
+      button{
+        border: solid 1px;
+        border-radius: 5px;
+      }
+
+      form{
+        margin: auto;
+        margin-top: 20px;
+        width: 16%;
+      }
+
+      .form-group > input{
+        width: 100%;
+      }
+
+      .button-group{
+        display: flex;
+      }
+
+      .button-group > button{
+        flex: 1;
+      }
+    </style>
+  </body>
+
+</html>
